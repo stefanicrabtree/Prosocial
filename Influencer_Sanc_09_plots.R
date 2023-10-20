@@ -299,3 +299,26 @@ plot(reluctant_defector_pennies ~ step, data=e, type="l", ylim=c(0,650), lty=1, 
         lwd = c(4,4,4,4,4)))
 dev.off()
 
+##### Colin experimenting  ####
+inf_sanc_09_ <- inf_sanc_09 %>%
+  mutate(total_pennies = monitor_pennies + always_defect_pennies + cooperator_pennies + reluctant_cooperator_pennies + reluctant_defector_pennies) %>%
+  mutate(coopall_pennies_frac = (monitor_pennies + cooperator_pennies + reluctant_cooperator_pennies) / total_pennies)
+
+inf_sanc_09_ %>%
+  select(run_num, step, local_probinfluence, local_sphereinfluence, coopall_pennies_frac) %>%
+  mutate(local_probinfluence = as.factor(local_probinfluence)) %>%
+  mutate(local_sphereinfluence = as.factor(local_sphereinfluence)) %>%
+  group_by(step, local_probinfluence, local_sphereinfluence) %>%
+  dplyr::summarise(avg_coop_pennies = mean(coopall_pennies_frac)) %>%
+  ggplot() +
+  #geom_line(aes(step, coopall_pennies_frac, color = factor(run_num)))
+  geom_line(aes(step, avg_coop_pennies, color = factor(local_probinfluence), linetype = local_sphereinfluence),
+            linewidth = 1, position=position_dodge(width=10)) +
+  labs(x= "Step", y= "Cooperator's proportion of total wealth", title = "Influencer") +
+  scale_color_brewer("Prob of Influence", palette = "Set2") +
+  scale_linetype_manual("Sphere of Influence", values = c("dotted","solid")) +
+  theme_bw() +
+  #guides(colour = "none") +
+  geom_hline( yintercept = .5, size = 1, color = "red", linetype="dashed")
+
+

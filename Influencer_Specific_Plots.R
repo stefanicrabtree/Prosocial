@@ -58,7 +58,7 @@ library(ggthemes) # Load
 ##the folder I'm using
 #I'm switching to relative paths so its easier to both work on the script
 getwd()
-setwd("/Users/stefanicrabtree/Documents/Prosocial/April_30_2023_runs")
+#setwd("/Users/stefanicrabtree/Documents/Prosocial/April_30_2023_runs")
 
 
 
@@ -335,4 +335,29 @@ par(oma=c(0,0,0,0))
 plot_grid(p1, p2, p3, p4, p5, p6, nrow=2, ncol=3,  labels=c('\nA.', '\nB.', '\nC.', '\nD.', '\nE.', '\nF.'), label_size=10, align="v")
 dev.off()
 
+#### Colin Experimenting ####
+inf_sanc <-
+  bind_rows(inf_sanc_04,inf_sanc_09)
+
+inf_sanc_ <- inf_sanc %>%
+  mutate(total_pennies = monitor_pennies + always_defect_pennies + cooperator_pennies + reluctant_cooperator_pennies + reluctant_defector_pennies) %>%
+  mutate(coopall_pennies_frac = (monitor_pennies + cooperator_pennies + reluctant_cooperator_pennies) / total_pennies)
+
+inf_sanc_ %>%
+  select(run_num, step, local_probinfluence, local_sphereinfluence, prob_sanction, coopall_pennies_frac) %>%
+  mutate(local_probinfluence = as.factor(local_probinfluence)) %>%
+  mutate(local_sphereinfluence = as.factor(local_sphereinfluence)) %>%
+  mutate(prob_sanction = as.factor(prob_sanction)) %>%
+  group_by(step, local_probinfluence, local_sphereinfluence, prob_sanction) %>%
+  dplyr::summarise(avg_coop_pennies = mean(coopall_pennies_frac)) %>%
+  ggplot() +
+  #geom_line(aes(step, coopall_pennies_frac, color = factor(run_num)))
+  geom_line(aes(step, avg_coop_pennies, color = factor(prob_sanction), linetype = local_sphereinfluence),
+            linewidth = 1, position=position_dodge(width=10)) +
+  labs(x= "Step", y= "Cooperator's proportion of total wealth", title = "Influencer") +
+  scale_color_brewer("Prob sanction", palette = "Set2") +
+  scale_linetype_manual("Sphere of Influence", values = c("dotted","solid")) +
+  theme_bw() +
+  #guides(colour = "none") +
+  geom_hline( yintercept = .5, size = 1, color = "red", linetype="dashed")
 

@@ -58,7 +58,7 @@ library(cowplot)
 ##the folder I'm using
 #I'm switching to relative paths so its easier to both work on the script
 getwd()
-setwd("/Users/stefanicrabtree/Documents/Prosocial/April_30_2023_runs")
+#setwd("/Users/stefanicrabtree/Documents/Prosocial/April_30_2023_runs")
 
 
 #MM <- read.csv ("Prosocial_Sept_19_mm_only_PGG_1_5-table.csv", skip=6, header=T)
@@ -66,10 +66,13 @@ setwd("/Users/stefanicrabtree/Documents/Prosocial/April_30_2023_runs")
 #MM_4 <-subset(MM, public_goods_game_multiplier=="1.5")
 #MM <- read.csv ("Prosocial_Sept_19_2022_mm_only_PGG_2-table.csv", skip=6, header=T)
 
-MM <- read.csv ("Prosocial_July_7_mm_only_PGG_2_Prob_4-table.csv", skip=6, header=T)
-MM <- read.csv ("Prosocial_July_7_mm_only_PGG_2_Prob_9-table.csv", skip=6, header=T)
+#MM <- read.csv ("Prosocial_July_7_mm_only_PGG_2_Prob_4-table.csv", skip=6, header=T)
+#MM <- read.csv ("Prosocial_July_7_mm_only_PGG_2_Prob_9-table.csv", skip=6, header=T)
 
-MM <- read.csv ("Prosocial_July_7_mm_only_PGG_2_Prob_4-table.csv", skip=6, header=T)
+MMa <- read.csv ("Prosocial_July_7_mm_only_PGG_2_Prob_4-table.csv", skip=6, header=T)
+MMb <- read.csv("Prosocial_July_7_mm_only_PGG_1_5_Prob_4-table.csv", skip=6, header = T)
+MM <- bind_rows(MMa,MMb)
+
 
 ## In MM we have varying sanction fines. We don't do that for the other types of plots
 MM_4 <-subset(MM, sanction_fine=="4")
@@ -296,3 +299,47 @@ par(mar=c(4.5,4.5,1.5,1.2))
 par(oma=c(0,0,0,0))
 plot_grid(ppMM4, ppMM5, ppMM6, pp10Z, nrow=4, ncol = 1, labels=c('\n a.', '\n b.', '\n c.', '\n d.'), label_size=10, align="v")
 dev.off()
+
+
+
+##### Colin experimenting  ####
+library(dplyr)
+
+
+MMa <- read.csv ("Prosocial_July_7_mm_only_PGG_2_Prob_4-table.csv", skip=6, header=T)
+MMb <- read.csv("Prosocial_July_7_mm_only_PGG_1_5_Prob_4-table.csv", skip=6, header = T)
+MM <- bind_rows(MMa,MMb)
+
+
+# MM_6_ <- MM_6 %>%
+#   mutate(total_pennies = monitor_pennies + always_defect_pennies + cooperator_pennies + reluctant_cooperator_pennies + reluctant_defector_pennies) %>%
+#   mutate(coopall_pennies_frac = (monitor_pennies + cooperator_pennies + reluctant_cooperator_pennies) / total_pennies)
+# 
+# MM_6_ %>%
+#   select(run_num, step, coopall_pennies_frac) %>%
+#   group_by(step) %>%
+#   dplyr::summarise(avg_coop_pennies = mean(coopall_pennies_frac)) %>%
+#   ggplot() +
+#   #geom_line(aes(step, coopall_pennies_frac, color = factor(run_num)))
+#   geom_line(aes(step, avg_coop_pennies))
+
+MM_ <- MM %>%
+  mutate(total_pennies = monitor_pennies + always_defect_pennies + cooperator_pennies + reluctant_cooperator_pennies + reluctant_defector_pennies) %>%
+  mutate(coopall_pennies_frac = (monitor_pennies + cooperator_pennies + reluctant_cooperator_pennies) / total_pennies)
+
+MM_ %>%
+  select(run_num, public_goods_game_multiplier, step, sanction_fine, coopall_pennies_frac) %>%
+  mutate(public_goods_game_multiplier = as.factor(public_goods_game_multiplier)) %>%
+  group_by(step,sanction_fine, public_goods_game_multiplier) %>%
+  dplyr::summarise(avg_coop_pennies = mean(coopall_pennies_frac)) %>%
+  ggplot() +
+  #geom_line(aes(step, coopall_pennies_frac, color = factor(run_num)))
+  geom_line(aes(step, avg_coop_pennies, color = factor(sanction_fine), linetype = public_goods_game_multiplier),
+            linewidth = 1, position=position_dodge(width=2)) +
+  labs(x= "Step", y= "Cooperator's proportion of total wealth", title = "Mutual monitoring", color = "Sanction Fine") +
+  scale_color_brewer(palette = "Set2") +
+  scale_linetype_manual("PGGm", values = c("dotted","solid")) +
+  theme_bw() +
+  #guides(colour = "none") +
+  geom_hline( yintercept = .5, size = 1, color = "red", linetype="dashed")
+
