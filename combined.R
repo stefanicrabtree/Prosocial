@@ -1,7 +1,7 @@
 all <- bind_rows(
   filter(MM_, public_goods_game_multiplier == 2 & sanction_fine == 6),
   filter(despot_, prob_sanction == 0.9),
-  filter(copy_leader_, prob_sanction == 0.9),
+  #filter(copy_leader_, prob_sanction == 0.9),
   #filter(despot_copy, prob_sanction == 0.9),
   filter(inf_sanc_, local_sphereinfluence == 10 & local_probinfluence == 0.9)
   )
