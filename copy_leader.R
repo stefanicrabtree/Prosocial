@@ -4,7 +4,8 @@ library(dplyr)
 copy_leader40 <- read.csv ("Prosocial_April_30_2023_ps_04_copy_defector-table.csv", skip=6, header=T)
 copy_leader90 <- read.csv ("Prosocial_April_30_2023_ps_09_copy_defector-table.csv", skip=6, header=T)
 
-copy_leader <- bind_rows(copy_leader40,copy_leader90)
+copy_leader <- bind_rows(copy_leader40,copy_leader90) %>%
+  mutate(Strategy = "Copy defector")
 
 copy_leader_ <- copy_leader %>%
   mutate(total_pennies = monitor_pennies + always_defect_pennies + cooperator_pennies + reluctant_cooperator_pennies + reluctant_defector_pennies) %>%

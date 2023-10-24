@@ -1,7 +1,8 @@
 despot40 <- read.csv ("Prosocial_April_30_despot_ps_4-table.csv", skip=6, header=T)
 despot90 <- read.csv ("Prosocial_April_30_despot_ps_9-table.csv", skip=6, header=T)
 
-despot <- bind_rows(despot40,despot90)
+despot <- bind_rows(despot40,despot90) %>%
+  mutate(Strategy = "Global")
 
 despot_ <- despot %>%
   mutate(total_pennies = monitor_pennies + always_defect_pennies + cooperator_pennies + reluctant_cooperator_pennies + reluctant_defector_pennies) %>%

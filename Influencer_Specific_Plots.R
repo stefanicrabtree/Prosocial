@@ -340,7 +340,8 @@ inf_sanc_04 <- read.csv ("Prosocial_April_30_influencer_10_ps_04-table.csv", ski
 inf_sanc_09 <- read.csv ("Prosocial_April_30_influencer_10_ps_09-table.csv", skip=6, header=T)
 
 inf_sanc <-
-  bind_rows(inf_sanc_04,inf_sanc_09)
+  bind_rows(inf_sanc_04,inf_sanc_09) %>%
+  mutate(Strategy = "Influencer")
 
 inf_sanc_ <- inf_sanc %>%
   mutate(total_pennies = monitor_pennies + always_defect_pennies + cooperator_pennies + reluctant_cooperator_pennies + reluctant_defector_pennies) %>%
@@ -363,5 +364,6 @@ inf_sanc_ %>%
   scale_linetype_manual("Sphere of Influence", values = c("dotted","solid")) +
   theme_bw() +
   #guides(colour = "none") +
-  geom_hline( yintercept = .5, size = .5, color = "black", linetype="dashed")
+  geom_hline( yintercept = .5, size = .5, color = "black", linetype="dashed") +
+  theme(axis.title.y = element_text(margin = margin(t = 0, r = 5, b = 0, l = 0)))
 ggsave("infl_wealth_all.png", units = "in", width = 6, height = 4)

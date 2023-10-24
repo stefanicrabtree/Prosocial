@@ -309,7 +309,8 @@ library(ggplot2)
 
 MMa <- read.csv ("Prosocial_July_7_mm_only_PGG_2_Prob_4-table.csv", skip=6, header=T)
 MMb <- read.csv("Prosocial_July_7_mm_only_PGG_1_5_Prob_4-table.csv", skip=6, header = T)
-MM <- bind_rows(MMa,MMb)
+MM <- bind_rows(MMa,MMb) %>%
+  mutate(Strategy = "MM")
 
 
 # MM_6_ <- MM_6 %>%
