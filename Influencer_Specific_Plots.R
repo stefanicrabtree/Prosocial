@@ -336,6 +336,9 @@ plot_grid(p1, p2, p3, p4, p5, p6, nrow=2, ncol=3,  labels=c('\nA.', '\nB.', '\nC
 dev.off()
 
 #### Colin Experimenting ####
+inf_sanc_04 <- read.csv ("Prosocial_April_30_influencer_10_ps_04-table.csv", skip=6, header=T)
+inf_sanc_09 <- read.csv ("Prosocial_April_30_influencer_10_ps_09-table.csv", skip=6, header=T)
+
 inf_sanc <-
   bind_rows(inf_sanc_04,inf_sanc_09)
 
@@ -354,10 +357,11 @@ inf_sanc_ %>%
   #geom_line(aes(step, coopall_pennies_frac, color = factor(run_num)))
   geom_line(aes(step, avg_coop_pennies, color = factor(prob_sanction), linetype = local_sphereinfluence),
             linewidth = 1, position=position_dodge(width=10)) +
-  labs(x= "Step", y= "Cooperator's proportion of total wealth", title = "Influencer") +
-  scale_color_brewer("Prob sanction", palette = "Set2") +
+  labs(x= "Step", y= "Cooperator's proportion of total wealth", title = "Local influencer") +
+  #scale_color_brewer("Prob sanction", palette = "Set2") +
+  scale_color_manual("Sanction\nprobability", values = stef_colors) +
   scale_linetype_manual("Sphere of Influence", values = c("dotted","solid")) +
   theme_bw() +
   #guides(colour = "none") +
-  geom_hline( yintercept = .5, size = 1, color = "red", linetype="dashed")
-
+  geom_hline( yintercept = .5, size = .5, color = "black", linetype="dashed")
+ggsave("infl_wealth_all.png", units = "in", width = 6, height = 4)

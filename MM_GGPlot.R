@@ -304,6 +304,7 @@ dev.off()
 
 ##### Colin experimenting  ####
 library(dplyr)
+library(ggplot2)
 
 
 MMa <- read.csv ("Prosocial_July_7_mm_only_PGG_2_Prob_4-table.csv", skip=6, header=T)
@@ -323,6 +324,8 @@ MM <- bind_rows(MMa,MMb)
 #   #geom_line(aes(step, coopall_pennies_frac, color = factor(run_num)))
 #   geom_line(aes(step, avg_coop_pennies))
 
+stef_colors <- c("cadetblue3", "dodgerblue2", "mediumpurple3", "darkorchid3")
+
 MM_ <- MM %>%
   mutate(total_pennies = monitor_pennies + always_defect_pennies + cooperator_pennies + reluctant_cooperator_pennies + reluctant_defector_pennies) %>%
   mutate(coopall_pennies_frac = (monitor_pennies + cooperator_pennies + reluctant_cooperator_pennies) / total_pennies)
@@ -336,10 +339,11 @@ MM_ %>%
   #geom_line(aes(step, coopall_pennies_frac, color = factor(run_num)))
   geom_line(aes(step, avg_coop_pennies, color = factor(sanction_fine), linetype = public_goods_game_multiplier),
             linewidth = 1, position=position_dodge(width=2)) +
-  labs(x= "Step", y= "Cooperator's proportion of total wealth", title = "Mutual monitoring", color = "Sanction Fine") +
-  scale_color_brewer(palette = "Set2") +
+  labs(x= "Time step", y= "Cooperator's proportion of total wealth", title = "Mutual monitoring", color = "Sanction fine") +
+  scale_color_manual(values = stef_colors) +
   scale_linetype_manual("PGGm", values = c("dotted","solid")) +
   theme_bw() +
-  #guides(colour = "none") +
-  geom_hline( yintercept = .5, size = 1, color = "red", linetype="dashed")
-
+  #guides(colour = "none", linetype = "none") +
+  geom_hline(yintercept = .5, size = .5, color = "black", linetype="dashed") +
+  theme(axis.title.y = element_text(margin = margin(t = 0, r = 5, b = 0, l = 0)))
+ggsave("mm_wealth_all.png", units = "in", width = 6, height = 4)
