@@ -6,7 +6,6 @@ breed [lineages lineage] ;not used in this instantiation, but kept in case of fu
 
 
 globals [
-  influencer_done
 ]
 
 
@@ -114,7 +113,7 @@ to play-goods-game
   ;cooperators give their pennies to the head
 
 
-  ask turtles with [label = "C" ] [
+  ask turtles with [label = "C" or label = "infl"] [
     set pennies pennies - cost-of-pg-game
     set cooperate true
     ask turtle head [set pennies pennies + cost-of-pg-game] ;so every turtle gives their fee to their head
@@ -241,41 +240,47 @@ to reset-sanctions
     ]
   ]
 
-    if global_strategy = "despot" [
+  if global_strategy = "despot" [
   ]
 
 
   if global_strategy = "influencer" [
+    if any? turtles with [label = "R" and sanctioned = true ] [ ;just added
+      ask turtles with [label = "R"  and sanctioned = true ] [ ;just added
+        if random-float 1 < .1 [ set sanctioned false set cooperate false ] ; so under no leadership model a random 10% of sanctioned turtles flip back to reluctant non-cooperators
+      ]
+    ]
     influence
   ]
   ;  ;; if there's a local leader, don't change, otherwise, you can revert
 end
 
 to influence
-
-
   if any? turtles with [cooperate = false ] and any? turtles with [cooperate = true] [
   let coop_pennies mean [pennies] of turtles with [cooperate = true]
   let defect_pennies mean [pennies] of turtles with [cooperate = false]
 
-  if coop_pennies >= defect_pennies and influencer_done = false [
+  if coop_pennies >= defect_pennies [
     ;;choose a random agent, ask their radius of agents to assess global fitness, and to conform
-    if any? turtles with [label = "R" and sanctioned = false and cooperate = false and any? turtles in-radius local_sphereinfluence with [label = "infl"] = false] [
-      ask one-of turtles with [label = "R" and sanctioned = false and cooperate = false and any? turtles in-radius local_sphereinfluence with [label = "infl"] = false] [
-        set label "infl" set cooperate true set influencer_done true]
-    ]
+
+;      if any? turtles with [label = "R" and sanctioned = false and cooperate = false and any? turtles in-radius local_sphereinfluence with [label = "infl"] = false] [
+;        ask one-of turtles with [label = "R" and sanctioned = false and cooperate = false and any? turtles in-radius local_sphereinfluence with [label = "infl"] = false] [
+;          set label "infl" set cooperate true ];set influencer_done true type "3"]
+;      ]
+      if any? turtles with [label = "R" and any? turtles in-radius local_sphereinfluence with [label = "infl"] = false] [
+        ask one-of turtles with [label = "R" and any? turtles in-radius local_sphereinfluence with [label = "infl"] = false] [
+          set label "infl" set cooperate true set sanctioned false]]
+      ]
+
   ]
   ask turtles with [label = "infl"] [
-    if any? turtles in-radius local_sphereinfluence with [label = "R"] [
-      ask turtles in-radius local_sphereinfluence with [label = "R"] [
-        ifelse random-float 1 < local_probinfluence [
+
+    if any? turtles in-radius local_sphereinfluence with [label = "R" and cooperate = false] [
+      ask turtles in-radius local_sphereinfluence with [label = "R" and cooperate = false] [
+        if random-float 1 < local_probinfluence [
           set cooperate TRUE    ;influencer convinces them
           set sanctioned false ]
-        [ ;else local influencing fails
-          set cooperate false
-          set sanctioned false
-        ]
-  ] ] ] ]
+  ] ] ] ;]
 
 end
 
@@ -422,7 +427,7 @@ sanction_fine
 sanction_fine
 0
 15
-10.0
+6.0
 0.25
 1
 NIL
@@ -476,12 +481,12 @@ true
 true
 "" ""
 PENS
-"Monitor" 1.0 0 -987046 true "" "if any? turtles with [label = \"M\"] [plotxy ticks mean [pennies] of turtles with [label = \"M\"]]"
+"Monitor" 1.0 0 -955883 true "" "if any? turtles with [label = \"M\"] [plotxy ticks mean [pennies] of turtles with [label = \"M\"]]"
 "Defect" 1.0 0 -8053223 true "" "if any? turtles with [label = \"D\"] [plotxy ticks mean [pennies] of turtles with [label = \"D\"]]"
 "Coop" 1.0 0 -12087248 true "" "if any? turtles with [label = \"C\"] [plotxy ticks mean [pennies] of turtles with [label = \"C\"]]"
 "Reluct-Coop" 1.0 0 -6565750 true "" "if any? turtles with [label = \"R\" and cooperate = true] [\n  plotxy ticks mean [pennies] of turtles with [label = \"R\" and cooperate = true]\n]"
 "Reluct-Defect" 1.0 0 -1069655 true "" "if any? turtles with [label = \"R\" and cooperate = false] [\n  plot mean [pennies] of turtles with [label = \"R\" and cooperate = false]\n]"
-"pen-5" 1.0 0 -7500403 true "" "if any? turtles with [label = \"infl\"] [ plot mean [pennies] of turtles with [label = \"infl\"]]"
+"Local-leaders" 1.0 0 -13791810 true "" "if any? turtles with [label = \"infl\"] [ plot mean [pennies] of turtles with [label = \"infl\"]]"
 
 BUTTON
 146
@@ -1083,7 +1088,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.2
+NetLogo 6.3.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
@@ -1157,7 +1162,7 @@ NetLogo 6.2.2
       <value value="0.9"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="Sept_18_influencer_10" repetitions="50" runMetricsEveryStep="true">
+  <experiment name="Nov_6_influencer" repetitions="50" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <metric>count turtles</metric>
@@ -1166,19 +1171,23 @@ NetLogo 6.2.2
     <metric>count turtles with [label = "C"]</metric>
     <metric>count turtles with [label = "R" and cooperate = true]</metric>
     <metric>count turtles with [label = "R" and cooperate = false]</metric>
+    <metric>count turtles with [label = "infl"]</metric>
     <metric>mean [pennies] of turtles with [label = "M"]</metric>
     <metric>mean [pennies] of turtles with [label = "D"]</metric>
     <metric>mean [pennies] of turtles with [label = "C"]</metric>
     <metric>mean [pennies] of turtles with [label = "R" and cooperate = true]</metric>
     <metric>mean [pennies] of turtles with [label = "R" and cooperate = false]</metric>
+    <metric>mean [pennies] of turtles with [label = "infl"]</metric>
     <enumeratedValueSet variable="cost-of-pg-game">
       <value value="1"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="local_sphereinfluence">
+      <value value="3"/>
       <value value="5"/>
       <value value="10"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="local_probinfluence">
+      <value value="0.25"/>
       <value value="0.5"/>
       <value value="0.75"/>
       <value value="0.9"/>

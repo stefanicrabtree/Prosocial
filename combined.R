@@ -3,7 +3,7 @@ all <- bind_rows(
   filter(despot_, prob_sanction == 0.9),
   #filter(copy_leader_, prob_sanction == 0.9),
   #filter(despot_copy, prob_sanction == 0.9),
-  filter(inf_sanc_, local_sphereinfluence == 10 & local_probinfluence == 0.9)
+  filter(inf_sanc_09_, local_sphereinfluence == 10 & local_probinfluence == 0.9)
   )
 
 all %>%

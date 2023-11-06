@@ -1,4 +1,5 @@
-
+library(ggplot2)
+library(dplyr)
 
 #inf_sanc_04 <- read.csv ("Prosocial_April_30_influencer_10_ps_04-table.csv", skip=6, header=T)
 inf_sanc_09 <- read.csv ("Prosocial_April_30_influencer_10_ps_09-table.csv", skip=6, header=T)
@@ -300,9 +301,12 @@ plot(reluctant_defector_pennies ~ step, data=e, type="l", ylim=c(0,650), lty=1, 
 dev.off()
 
 ##### Colin experimenting  ####
+#inf_sanc_09 <- read.csv ("Prosocial_April_30_influencer_10_ps_09-table.csv", skip=6, header=T)
+inf_sanc_09 <- read.csv ("Prosocial_July_30_2023_For_Github Nov_6_influencer-table.csv", skip=6, header=T)
 inf_sanc_09_ <- inf_sanc_09 %>%
-  mutate(total_pennies = monitor_pennies + always_defect_pennies + cooperator_pennies + reluctant_cooperator_pennies + reluctant_defector_pennies) %>%
-  mutate(coopall_pennies_frac = (monitor_pennies + cooperator_pennies + reluctant_cooperator_pennies) / total_pennies)
+  mutate(total_pennies = monitor_pennies + always_defect_pennies + cooperator_pennies + reluctant_cooperator_pennies + reluctant_defector_pennies + infl_pennies) %>%
+  mutate(coopall_pennies_frac = (monitor_pennies + cooperator_pennies + reluctant_cooperator_pennies + infl_pennies) / total_pennies) %>%
+  mutate(Strategy = "Influencer")
 
 inf_sanc_09_ %>%
   select(run_num, step, local_probinfluence, local_sphereinfluence, coopall_pennies_frac) %>%
@@ -314,9 +318,11 @@ inf_sanc_09_ %>%
   #geom_line(aes(step, coopall_pennies_frac, color = factor(run_num)))
   geom_line(aes(step, avg_coop_pennies, color = factor(local_probinfluence), linetype = local_sphereinfluence),
             linewidth = 1, position=position_dodge(width=10)) +
+  geom_line(aes(step, avg_coop_pennies, color = factor(local_probinfluence), linetype = local_sphereinfluence),
+            linewidth = 1) +
   labs(x= "Step", y= "Cooperator's proportion of total wealth", title = "Influencer") +
   scale_color_brewer("Prob of Influence", palette = "Set2") +
-  scale_linetype_manual("Sphere of Influence", values = c("dotted","solid")) +
+  scale_linetype_manual("Sphere of Influence", values = c("dotted","dashed","solid")) +
   theme_bw() +
   #guides(colour = "none") +
   geom_hline( yintercept = .5, size = 1, color = "red", linetype="dashed")
