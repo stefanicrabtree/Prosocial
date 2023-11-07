@@ -321,10 +321,10 @@ inf_sanc_09_ %>%
   geom_line(aes(step, avg_coop_pennies, color = factor(local_probinfluence), linetype = local_sphereinfluence),
             linewidth = 1) +
   labs(x= "Step", y= "Cooperator's proportion of total wealth", title = "Influencer") +
-  scale_color_brewer("Prob of Influence", palette = "Set2") +
+  scale_color_manual("Prob. of Influence", values = stef_colors) +
   scale_linetype_manual("Sphere of Influence", values = c("dotted","dashed","solid")) +
   theme_bw() +
   #guides(colour = "none") +
-  geom_hline( yintercept = .5, size = 1, color = "red", linetype="dashed")
-
+  geom_hline( yintercept = .5, size = 1, color = "black", linetype="dashed")
+ggsave("infl_wealth_all.png", units = "in", height = 4, width = 6)
 

@@ -656,7 +656,7 @@ percent_cooperators
 percent_cooperators
 0
 0.95
-0.45
+0.14
 0.05
 1
 NIL
@@ -671,7 +671,7 @@ percent_monitors
 percent_monitors
 0
 0.15
-0.07
+0.38
 0.01
 1
 NIL
@@ -1420,6 +1420,324 @@ NetLogo 6.3.0
     </enumeratedValueSet>
     <enumeratedValueSet variable="prob-sanction">
       <value value="0.9"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="Nov_7_agentpops_moredefect1" repetitions="50" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>count turtles</metric>
+    <metric>count turtles with [label = "M"]</metric>
+    <metric>count turtles with [label = "D"]</metric>
+    <metric>count turtles with [label = "C"]</metric>
+    <metric>count turtles with [label = "R" and cooperate = true]</metric>
+    <metric>count turtles with [label = "R" and cooperate = false]</metric>
+    <metric>mean [pennies] of turtles with [label = "M"]</metric>
+    <metric>mean [pennies] of turtles with [label = "D"]</metric>
+    <metric>mean [pennies] of turtles with [label = "C"]</metric>
+    <metric>mean [pennies] of turtles with [label = "R" and cooperate = true]</metric>
+    <metric>mean [pennies] of turtles with [label = "R" and cooperate = false]</metric>
+    <enumeratedValueSet variable="cost-of-pg-game">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_time">
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="public_goods_game_multiplier">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_tax">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_fine">
+      <value value="6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="prob-sanction">
+      <value value="0.9"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pop_size">
+      <value value="500"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_monitors">
+      <value value="0.07"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_always_defect">
+      <value value="0.14"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_cooperators">
+      <value value="0.38"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="Nov_7_agentpops_moredefect2" repetitions="50" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>count turtles</metric>
+    <metric>count turtles with [label = "M"]</metric>
+    <metric>count turtles with [label = "D"]</metric>
+    <metric>count turtles with [label = "C"]</metric>
+    <metric>count turtles with [label = "R" and cooperate = true]</metric>
+    <metric>count turtles with [label = "R" and cooperate = false]</metric>
+    <metric>mean [pennies] of turtles with [label = "M"]</metric>
+    <metric>mean [pennies] of turtles with [label = "D"]</metric>
+    <metric>mean [pennies] of turtles with [label = "C"]</metric>
+    <metric>mean [pennies] of turtles with [label = "R" and cooperate = true]</metric>
+    <metric>mean [pennies] of turtles with [label = "R" and cooperate = false]</metric>
+    <enumeratedValueSet variable="cost-of-pg-game">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_time">
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="public_goods_game_multiplier">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_tax">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_fine">
+      <value value="6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="prob-sanction">
+      <value value="0.9"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pop_size">
+      <value value="500"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_monitors">
+      <value value="0.07"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_always_defect">
+      <value value="0.25"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_cooperators">
+      <value value="0.27"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="Nov_7_agentpops_moremonitor1" repetitions="50" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>count turtles</metric>
+    <metric>count turtles with [label = "M"]</metric>
+    <metric>count turtles with [label = "D"]</metric>
+    <metric>count turtles with [label = "C"]</metric>
+    <metric>count turtles with [label = "R" and cooperate = true]</metric>
+    <metric>count turtles with [label = "R" and cooperate = false]</metric>
+    <metric>mean [pennies] of turtles with [label = "M"]</metric>
+    <metric>mean [pennies] of turtles with [label = "D"]</metric>
+    <metric>mean [pennies] of turtles with [label = "C"]</metric>
+    <metric>mean [pennies] of turtles with [label = "R" and cooperate = true]</metric>
+    <metric>mean [pennies] of turtles with [label = "R" and cooperate = false]</metric>
+    <enumeratedValueSet variable="cost-of-pg-game">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_time">
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="public_goods_game_multiplier">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_tax">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_fine">
+      <value value="6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="prob-sanction">
+      <value value="0.9"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pop_size">
+      <value value="500"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_monitors">
+      <value value="0.14"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_always_defect">
+      <value value="0.07"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_cooperators">
+      <value value="0.38"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="Nov_7_agentpops_moremonitor2" repetitions="50" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>count turtles</metric>
+    <metric>count turtles with [label = "M"]</metric>
+    <metric>count turtles with [label = "D"]</metric>
+    <metric>count turtles with [label = "C"]</metric>
+    <metric>count turtles with [label = "R" and cooperate = true]</metric>
+    <metric>count turtles with [label = "R" and cooperate = false]</metric>
+    <metric>mean [pennies] of turtles with [label = "M"]</metric>
+    <metric>mean [pennies] of turtles with [label = "D"]</metric>
+    <metric>mean [pennies] of turtles with [label = "C"]</metric>
+    <metric>mean [pennies] of turtles with [label = "R" and cooperate = true]</metric>
+    <metric>mean [pennies] of turtles with [label = "R" and cooperate = false]</metric>
+    <enumeratedValueSet variable="cost-of-pg-game">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_time">
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="public_goods_game_multiplier">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_tax">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_fine">
+      <value value="6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="prob-sanction">
+      <value value="0.9"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pop_size">
+      <value value="500"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_monitors">
+      <value value="0.25"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_always_defect">
+      <value value="0.07"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_cooperators">
+      <value value="0.27"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="Nov_7_agentpops_size" repetitions="50" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>count turtles</metric>
+    <metric>count turtles with [label = "M"]</metric>
+    <metric>count turtles with [label = "D"]</metric>
+    <metric>count turtles with [label = "C"]</metric>
+    <metric>count turtles with [label = "R" and cooperate = true]</metric>
+    <metric>count turtles with [label = "R" and cooperate = false]</metric>
+    <metric>mean [pennies] of turtles with [label = "M"]</metric>
+    <metric>mean [pennies] of turtles with [label = "D"]</metric>
+    <metric>mean [pennies] of turtles with [label = "C"]</metric>
+    <metric>mean [pennies] of turtles with [label = "R" and cooperate = true]</metric>
+    <metric>mean [pennies] of turtles with [label = "R" and cooperate = false]</metric>
+    <enumeratedValueSet variable="cost-of-pg-game">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_time">
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="public_goods_game_multiplier">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_tax">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_fine">
+      <value value="6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="prob-sanction">
+      <value value="0.9"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pop_size">
+      <value value="50"/>
+      <value value="100"/>
+      <value value="250"/>
+      <value value="500"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_monitors">
+      <value value="0.07"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_always_defect">
+      <value value="0.07"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_cooperators">
+      <value value="0.45"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="Nov_7_agentpops_moredefect3" repetitions="50" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>count turtles</metric>
+    <metric>count turtles with [label = "M"]</metric>
+    <metric>count turtles with [label = "D"]</metric>
+    <metric>count turtles with [label = "C"]</metric>
+    <metric>count turtles with [label = "R" and cooperate = true]</metric>
+    <metric>count turtles with [label = "R" and cooperate = false]</metric>
+    <metric>mean [pennies] of turtles with [label = "M"]</metric>
+    <metric>mean [pennies] of turtles with [label = "D"]</metric>
+    <metric>mean [pennies] of turtles with [label = "C"]</metric>
+    <metric>mean [pennies] of turtles with [label = "R" and cooperate = true]</metric>
+    <metric>mean [pennies] of turtles with [label = "R" and cooperate = false]</metric>
+    <enumeratedValueSet variable="cost-of-pg-game">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_time">
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="public_goods_game_multiplier">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_tax">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_fine">
+      <value value="6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="prob-sanction">
+      <value value="0.9"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pop_size">
+      <value value="500"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_monitors">
+      <value value="0.07"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_always_defect">
+      <value value="0.38"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_cooperators">
+      <value value="0.14"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="Nov_7_agentpops_moremonitor3" repetitions="50" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>go</go>
+    <metric>count turtles</metric>
+    <metric>count turtles with [label = "M"]</metric>
+    <metric>count turtles with [label = "D"]</metric>
+    <metric>count turtles with [label = "C"]</metric>
+    <metric>count turtles with [label = "R" and cooperate = true]</metric>
+    <metric>count turtles with [label = "R" and cooperate = false]</metric>
+    <metric>mean [pennies] of turtles with [label = "M"]</metric>
+    <metric>mean [pennies] of turtles with [label = "D"]</metric>
+    <metric>mean [pennies] of turtles with [label = "C"]</metric>
+    <metric>mean [pennies] of turtles with [label = "R" and cooperate = true]</metric>
+    <metric>mean [pennies] of turtles with [label = "R" and cooperate = false]</metric>
+    <enumeratedValueSet variable="cost-of-pg-game">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_time">
+      <value value="50"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="public_goods_game_multiplier">
+      <value value="2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_tax">
+      <value value="0.5"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="sanction_fine">
+      <value value="6"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="prob-sanction">
+      <value value="0.9"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="pop_size">
+      <value value="500"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_monitors">
+      <value value="0.38"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_always_defect">
+      <value value="0.07"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="percent_cooperators">
+      <value value="0.14"/>
     </enumeratedValueSet>
   </experiment>
 </experiments>
