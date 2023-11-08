@@ -31,11 +31,12 @@ def %>%
   dplyr::summarise(avg_coop_pennies = mean(coopall_pennies_frac)) %>%
   ggplot() +
   #geom_line(aes(step, coopall_pennies_frac, color = factor(run_num)))
-  geom_line(aes(step, avg_coop_pennies, color = fct_relevel(Label,c("7%","14%","25%","38%"))),
+  geom_line(aes(step, avg_coop_pennies, color = fct_relevel(Label,c("7%","14%","28%","38%"))),
             linewidth = 1, position=position_dodge(width=2)) +
-  labs(x= "Time step", y= "Cooperator's proportion of total wealth", title = "Starting defector population", color = "Defector pop (%)") +
+  labs(x= "Time step", y= "Cooperator's proportion of total wealth", color = "Defector prop. (%)") +
   scale_color_manual(values = stef_colors) +
   theme_bw() +
+  theme(legend.position = c(0.85, 0.2)) +
   #guides(colour = "none", linetype = "none") +
   geom_hline(yintercept = .5, size = .5, color = "black", linetype="dashed") +
   theme(axis.title.y = element_text(margin = margin(t = 0, r = 5, b = 0, l = 0)))
@@ -71,11 +72,13 @@ p_mon <- mon %>%
   dplyr::summarise(avg_coop_pennies = mean(coopall_pennies_frac)) %>%
   ggplot() +
   #geom_line(aes(step, coopall_pennies_frac, color = factor(run_num)))
-  geom_line(aes(step, avg_coop_pennies, color = fct_relevel(Label,c("7%","14%","25%","38%"))),
+  geom_line(aes(step, avg_coop_pennies, color = fct_relevel(Label,c("7%","14%","28%","38%"))),
             linewidth = 1, position=position_dodge(width=2)) +
-  labs(x= "Time step", y= "Cooperator's proportion of total wealth", title = "Starting monitor population", color = "Monitor pop (%)") +
+  labs(x= "Time step", y= "Cooperator's proportion of total wealth", color = "Monitor prop. (%)") +
   scale_color_manual(values = stef_colors) +
   theme_bw() +
+  theme(legend.position = c(0.75, 0.25)) +
+  coord_cartesian(ylim = c(0,1)) +
   #guides(colour = "none", linetype = "none") +
   geom_hline(yintercept = .5, size = .5, color = "black", linetype="dashed") +
   theme(axis.title.y = element_text(margin = margin(t = 0, r = 5, b = 0, l = 0)))
@@ -95,13 +98,17 @@ p_popsize <- pop_size %>%
   #geom_line(aes(step, coopall_pennies_frac, color = factor(run_num)))
   geom_line(aes(step, avg_coop_pennies, color = factor(pop_size)),
             linewidth = 1, position=position_dodge(width=2)) +
-  labs(x= "Time step", y= "Cooperator's proportion of total wealth", title = "Starting population size", color = "Pop. size") +
+  labs(x= "Time step", y= "Cooperator's proportion of total wealth", color = "Pop. size") +
   scale_color_manual(values = stef_colors) +
   theme_bw() +
+  theme(legend.position = c(0.8, 0.25)) +
+  coord_cartesian(ylim = c(0,1)) +
   #guides(colour = "none", linetype = "none") +
   geom_hline(yintercept = .5, size = .5, color = "black", linetype="dashed") +
   theme(axis.title.y = element_text(margin = margin(t = 0, r = 5, b = 0, l = 0)))
-p_popsize
+p_popsize 
 ggsave("mm_popsize_var.png", units = "in", width = 6, height = 4)
 
 plot_grid(p_mon, p_popsize, labels = "AUTO")
+ggsave("supp_monitors_popsize.png", units = "in", width = 8, height = 4)
+
