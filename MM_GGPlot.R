@@ -307,7 +307,7 @@ library(dplyr)
 library(ggplot2)
 
 
-MMa <- read.csv ("Prosocial_July_7_mm_only_PGG_2_Prob_4-table.csv", skip=6, header=T)
+MMa <- read.csv ("Prosocial_July_7_mm_only_PGG_2_Prob_4-table.csv", skip=6, header=T) %>%
 MMb <- read.csv("Prosocial_July_7_mm_only_PGG_1_5_Prob_4-table.csv", skip=6, header = T)
 MM <- bind_rows(MMa,MMb) %>%
   mutate(Strategy = "MM")
@@ -332,15 +332,18 @@ MM_ <- MM %>%
   mutate(coopall_pennies_frac = (monitor_pennies + cooperator_pennies + reluctant_cooperator_pennies) / total_pennies)
 
 MM_ %>%
+  filter(public_goods_game_multiplier == 2) %>%
   select(run_num, public_goods_game_multiplier, step, sanction_fine, coopall_pennies_frac) %>%
   mutate(public_goods_game_multiplier = as.factor(public_goods_game_multiplier)) %>%
   group_by(step,sanction_fine, public_goods_game_multiplier) %>%
   dplyr::summarise(avg_coop_pennies = mean(coopall_pennies_frac)) %>%
   ggplot() +
   #geom_line(aes(step, coopall_pennies_frac, color = factor(run_num)))
-  geom_line(aes(step, avg_coop_pennies, color = factor(sanction_fine), linetype = public_goods_game_multiplier),
+#  geom_line(aes(step, avg_coop_pennies, color = factor(sanction_fine), linetype = public_goods_game_multiplier),
+ #           linewidth = 1, position=position_dodge(width=2)) +
+  geom_line(aes(step, avg_coop_pennies, color = factor(sanction_fine)),
             linewidth = 1, position=position_dodge(width=2)) +
-  labs(x= "Time step", y= "Cooperator's proportion of total wealth", title = "Mutual monitoring", color = "Sanction fine") +
+  labs(x= "Time step", y= "Cooperator's proportion of total wealth", title = "Cooperator's proportion of total wealth", color = "Sanction fine") +
   scale_color_manual(values = stef_colors) +
   scale_linetype_manual("PGGm", values = c("dotted","solid")) +
   theme_bw() +
