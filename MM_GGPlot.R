@@ -332,7 +332,25 @@ MM_ <- MM %>%
   mutate(coopall_pennies_frac = (monitor_pennies + cooperator_pennies + reluctant_cooperator_pennies) / total_pennies)
 
 MM_ %>%
-#  filter(public_goods_game_multiplier == 2) %>%
+  filter(public_goods_game_multiplier == 2) %>%
+  select(run_num, public_goods_game_multiplier, step, sanction_fine, coopall_pennies_frac) %>%
+  mutate(public_goods_game_multiplier = as.factor(public_goods_game_multiplier)) %>%
+  group_by(step,sanction_fine, public_goods_game_multiplier) %>%
+  dplyr::summarise(avg_coop_pennies = mean(coopall_pennies_frac)) %>%
+  ggplot() +
+  geom_line(aes(step, avg_coop_pennies, color = factor(sanction_fine)),
+            linewidth = 1, position=position_dodge(width=2)) +
+  labs(x= "Time step", y= "Proportion", title = "Cooperator's proportion of total wealth", color = "Sanction fine") +
+  scale_color_manual(values = stef_colors) +
+  scale_linetype_manual("CPRm", values = c("dotted","solid")) +
+  theme_bw() +
+  #guides(colour = "none", linetype = "none") +
+  theme(legend.position = c(0.9, 0.2)) +
+  geom_hline(yintercept = .5, size = .5, color = "black", linetype="dashed") +
+  theme(axis.title.y = element_text(margin = margin(t = 0, r = 5, b = 0, l = 0)))
+ggsave("mm_wealth_all.png", units = "in", width = 4, height = 4, scale = 2)
+
+MM_ %>%
   select(run_num, public_goods_game_multiplier, step, sanction_fine, coopall_pennies_frac) %>%
   mutate(public_goods_game_multiplier = as.factor(public_goods_game_multiplier)) %>%
   group_by(step,sanction_fine, public_goods_game_multiplier) %>%
@@ -348,7 +366,7 @@ MM_ %>%
   scale_linetype_manual("CPRm", values = c("dotted","solid")) +
   theme_bw() +
   #guides(colour = "none", linetype = "none") +
-  theme(legend.position = c(0.9, 0.4)) +
+  theme(legend.position = c(0.9, 0.35)) +
   geom_hline(yintercept = .5, size = .5, color = "black", linetype="dashed") +
   theme(axis.title.y = element_text(margin = margin(t = 0, r = 5, b = 0, l = 0)))
-ggsave("mm_wealth_all_pggboth.png", units = "in", width = 4, height = 4, scale = 2)
+ggsave("mm_wealth_all_CPRboth.png", units = "in", width = 4, height = 4, scale = 2)
