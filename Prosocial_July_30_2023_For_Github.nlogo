@@ -247,7 +247,7 @@ to reset-sanctions
   if global_strategy = "influencer" [
     if any? turtles with [label = "R" and sanctioned = true ] [ ;just added
       ask turtles with [label = "R"  and sanctioned = true ] [ ;just added
-        if random-float 1 < .1 [ set sanctioned false set cooperate false ] ; so under no leadership model a random 10% of sanctioned turtles flip back to reluctant non-cooperators
+        if random-float 1 < .1 [ set sanctioned false set cooperate false] ; like mm, under influencer model a random 10% of sanctioned turtles flip back to reluctant non-cooperators
       ]
     ]
     influence
@@ -275,11 +275,11 @@ to influence
   ]
   ask turtles with [label = "infl"] [
 
-    if any? turtles in-radius local_sphereinfluence with [label = "R" and cooperate = false] [
-      ask turtles in-radius local_sphereinfluence with [label = "R" and cooperate = false] [
+    if any? turtles in-radius local_sphereinfluence with [label = "R" and sanctioned = false] [
+      ask turtles in-radius local_sphereinfluence with [label = "R" and sanctioned = false] [
         if random-float 1 < local_probinfluence [
           set cooperate TRUE    ;influencer convinces them
-          set sanctioned false ]
+          set sanctioned TRUE ]
   ] ] ] ;]
 
 end
@@ -570,7 +570,7 @@ local_sphereinfluence
 local_sphereinfluence
 0
 10
-10.0
+3.0
 1
 1
 NIL
@@ -656,7 +656,7 @@ percent_cooperators
 percent_cooperators
 0
 0.95
-0.14
+0.45
 0.05
 1
 NIL
@@ -671,7 +671,7 @@ percent_monitors
 percent_monitors
 0
 0.15
-0.38
+0.07
 0.01
 1
 NIL
@@ -1162,7 +1162,7 @@ NetLogo 6.3.0
       <value value="0.9"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="Nov_6_influencer" repetitions="50" runMetricsEveryStep="true">
+  <experiment name="Nov_13_influencer" repetitions="50" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <metric>count turtles</metric>

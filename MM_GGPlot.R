@@ -307,7 +307,7 @@ library(dplyr)
 library(ggplot2)
 
 
-MMa <- read.csv ("Prosocial_July_7_mm_only_PGG_2_Prob_4-table.csv", skip=6, header=T) %>%
+MMa <- read.csv ("Prosocial_July_7_mm_only_PGG_2_Prob_4-table.csv", skip=6, header=T) 
 MMb <- read.csv("Prosocial_July_7_mm_only_PGG_1_5_Prob_4-table.csv", skip=6, header = T)
 MM <- bind_rows(MMa,MMb) %>%
   mutate(Strategy = "MM")
@@ -343,11 +343,12 @@ MM_ %>%
  #           linewidth = 1, position=position_dodge(width=2)) +
   geom_line(aes(step, avg_coop_pennies, color = factor(sanction_fine)),
             linewidth = 1, position=position_dodge(width=2)) +
-  labs(x= "Time step", y= "Cooperator's proportion of total wealth", title = "Cooperator's proportion of total wealth", color = "Sanction fine") +
+  labs(x= "Time step", y= "Proportion", title = "Cooperator's proportion of total wealth", color = "Sanction fine") +
   scale_color_manual(values = stef_colors) +
   scale_linetype_manual("PGGm", values = c("dotted","solid")) +
   theme_bw() +
   #guides(colour = "none", linetype = "none") +
+  theme(legend.position = c(0.9, 0.2)) +
   geom_hline(yintercept = .5, size = .5, color = "black", linetype="dashed") +
   theme(axis.title.y = element_text(margin = margin(t = 0, r = 5, b = 0, l = 0)))
-ggsave("mm_wealth_all.png", units = "in", width = 6, height = 4)
+ggsave("mm_wealth_all.png", units = "in", width = 4, height = 4, scale = 2)

@@ -302,7 +302,7 @@ dev.off()
 
 ##### Colin experimenting  ####
 #inf_sanc_09 <- read.csv ("Prosocial_April_30_influencer_10_ps_09-table.csv", skip=6, header=T)
-inf_sanc_09 <- read.csv ("Prosocial_July_30_2023_For_Github Nov_6_influencer-table.csv", skip=6, header=T)
+inf_sanc_09 <- read.csv ("Prosocial_July_30_2023_For_Github Nov_13_influencer-table.csv", skip=6, header=T)
 inf_sanc_09_ <- inf_sanc_09 %>%
   mutate(total_pennies = monitor_pennies + always_defect_pennies + cooperator_pennies + reluctant_cooperator_pennies + reluctant_defector_pennies + infl_pennies) %>%
   mutate(coopall_pennies_frac = (monitor_pennies + cooperator_pennies + reluctant_cooperator_pennies + infl_pennies) / total_pennies) %>%
@@ -318,13 +318,13 @@ inf_sanc_09_ %>%
   #geom_line(aes(step, coopall_pennies_frac, color = factor(run_num)))
   geom_line(aes(step, avg_coop_pennies, color = factor(local_probinfluence), linetype = local_sphereinfluence),
             linewidth = 1, position=position_dodge(width=10)) +
-  geom_line(aes(step, avg_coop_pennies, color = factor(local_probinfluence), linetype = local_sphereinfluence),
-            linewidth = 1) +
+#  geom_line(aes(step, avg_coop_pennies, color = factor(local_probinfluence), linetype = local_sphereinfluence),
+#            linewidth = 1) +
   labs(x= "Step", y= "Cooperator's proportion of total wealth", title = "Influencer") +
   scale_color_manual("Prob. of Influence", values = stef_colors) +
   scale_linetype_manual("Sphere of Influence", values = c("dotted","dashed","solid")) +
   theme_bw() +
   #guides(colour = "none") +
   geom_hline( yintercept = .5, size = 1, color = "black", linetype="dashed")
-ggsave("infl_wealth_all.png", units = "in", height = 4, width = 6)
+ggsave("infl_wealth_all_nov13.png", units = "in", height = 4, width = 6)
 
