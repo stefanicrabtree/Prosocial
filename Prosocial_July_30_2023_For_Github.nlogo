@@ -485,8 +485,8 @@ PENS
 "Defect" 1.0 0 -8053223 true "" "if any? turtles with [label = \"D\"] [plotxy ticks mean [pennies] of turtles with [label = \"D\"]]"
 "Coop" 1.0 0 -12087248 true "" "if any? turtles with [label = \"C\"] [plotxy ticks mean [pennies] of turtles with [label = \"C\"]]"
 "Reluct-Coop" 1.0 0 -6565750 true "" "if any? turtles with [label = \"R\" and cooperate = true] [\n  plotxy ticks mean [pennies] of turtles with [label = \"R\" and cooperate = true]\n]"
-"Reluct-Defect" 1.0 0 -1069655 true "" "if any? turtles with [label = \"R\" and cooperate = false] [\n  plot mean [pennies] of turtles with [label = \"R\" and cooperate = false]\n]"
-"Local-leaders" 1.0 0 -13791810 true "" "if any? turtles with [label = \"infl\"] [ plot mean [pennies] of turtles with [label = \"infl\"]]"
+"Reluct-Defect" 1.0 0 -1069655 true "" "if any? turtles with [label = \"R\" and cooperate = false] [\n  plotxy ticks mean [pennies] of turtles with [label = \"R\" and cooperate = false]\n]"
+"Local-leaders" 1.0 0 -13791810 true "" "if any? turtles with [label = \"infl\"] [ plotxy ticks mean [pennies] of turtles with [label = \"infl\"]]"
 
 BUTTON
 146
@@ -536,12 +536,12 @@ true
 true
 "" ""
 PENS
-"Reluct-Defector" 1.0 0 -2139308 true "" "plot count (turtles with [label = \"R\" and cooperate = false]) + 0.2"
-"Cooperators" 1.0 0 -12087248 true "" "plot count (turtles with [label = \"C\"])"
-"Monitor" 1.0 0 -817084 true "" "plot count (turtles with [label = \"M\"]) + 0.3"
-"Local-Leaders" 1.0 0 -13791810 true "" "plot count (turtles with [label = \"infl\"]) + 0.4"
-"Defectors" 1.0 0 -5298144 true "" "plot count (turtles with [label = \"D\"]) + 0.1"
-"Reluct-Coop" 1.0 0 -8732573 true "" "plot count (turtles with [label = \"R\" and cooperate = true]) + 0.5"
+"Reluct-Defector" 1.0 0 -2139308 true "" "plotxy ticks count (turtles with [label = \"R\" and cooperate = false]) + 0.2"
+"Cooperators" 1.0 0 -12087248 true "" "plotxy ticks count (turtles with [label = \"C\"])"
+"Monitor" 1.0 0 -817084 true "" "plotxy ticks count (turtles with [label = \"M\"]) + 0.3"
+"Local-Leaders" 1.0 0 -13791810 true "" "plotxy ticks count (turtles with [label = \"infl\"]) + 0.4"
+"Defectors" 1.0 0 -5298144 true "" "plotxy ticks count (turtles with [label = \"D\"]) + 0.1"
+"Reluct-Coop" 1.0 0 -8732573 true "" "plotxy ticks count (turtles with [label = \"R\" and cooperate = true]) + 0.5"
 
 PLOT
 1102
@@ -570,7 +570,7 @@ local_sphereinfluence
 local_sphereinfluence
 0
 10
-3.0
+10.0
 1
 1
 NIL

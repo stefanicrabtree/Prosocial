@@ -3,7 +3,7 @@ all <- bind_rows(
   filter(despot_, prob_sanction == 0.9),
   #filter(copy_leader_, prob_sanction == 0.9),
   #filter(despot_copy, prob_sanction == 0.9),
-  filter(inf_sanc_09_, local_sphereinfluence == 10 & local_probinfluence == 0.9)
+  filter(inf_sanc_09_, local_sphereinfluence == 5 & local_probinfluence == 0.9)
   )
 
 all %>%
@@ -22,4 +22,4 @@ all %>%
   #guides(colour = "none") +
   geom_hline( yintercept = .5, size = .5, color = "black", linetype="dashed") +
   theme(axis.title.y = element_text(margin = margin(t = 0, r = 5, b = 0, l = 0)))
-ggsave("all_wealth_all.png", units = "in", width = 6, height = 4)
+ggsave("all_wealth_all_nov13.png", units = "in", width = 6, height = 4)
