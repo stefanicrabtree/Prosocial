@@ -21,7 +21,7 @@ despot_ %>%
   scale_linetype_manual("PGGm", values = c("dotted","solid")) +
   theme_bw() +
   #guides(colour = "none") +
-  theme(legend.position = c(0.9, 0.2)) +
+  theme(legend.position = c(0.8, 0.2)) +
   geom_hline(yintercept = .5, size = .5, color = "black", linetype="dashed") +
   theme(axis.title.y = element_text(margin = margin(t = 0, r = 5, b = 0, l = 0)))
-ggsave("despot_wealth_all.png", units = "in", width = 4, height = 4, scale = 2)
+ggsave("despot_wealth_all.png", units = "in", width = 4, height = 4, scale = 1.5)

@@ -23,4 +23,4 @@ all %>%
   #guides(colour = "none") +
   geom_hline( yintercept = .5, size = .5, color = "black", linetype="dashed") +
   theme(axis.title.y = element_text(margin = margin(t = 0, r = 5, b = 0, l = 0)))
-ggsave("all_wealth_all_nov13.png", units = "in", width = 4, height = 4, scale = 2)
+ggsave("all_wealth_all_nov13.png", units = "in", width = 4, height = 4, scale = 1.5)

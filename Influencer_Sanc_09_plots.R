@@ -329,5 +329,5 @@ inf_sanc_09_ %>%
   theme(legend.position = c(0.9, 0.2)) +
   #guides(colour = "none") +
   geom_hline( yintercept = .5, size = 1, color = "black", linetype="dashed")
-ggsave("infl_wealth_all_nov13.png", units = "in", height = 4, width = 4,scale = 2)
+ggsave("infl_wealth_all_nov13.png", units = "in", height = 4, width = 4,scale = 1.5)
 
