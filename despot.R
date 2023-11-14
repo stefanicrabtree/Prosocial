@@ -16,11 +16,12 @@ despot_ %>%
   #geom_line(aes(step, coopall_pennies_frac, color = factor(run_num)))
   geom_line(aes(step, avg_coop_pennies, color = factor(prob_sanction)),
             linewidth = 1, position=position_dodge(width=2)) +
-  labs(x= "Time step", y= "Cooperator's proportion of total wealth", title = "Global leadership", color = "Sanction\nprobability") +
+  labs(x= "Time step", y= "Proportion", title = "Cooperators' proportion of total wealth", color = "Sanction\nprobability") +
   scale_color_manual(values = stef_colors) +
   scale_linetype_manual("PGGm", values = c("dotted","solid")) +
   theme_bw() +
   #guides(colour = "none") +
+  theme(legend.position = c(0.9, 0.2)) +
   geom_hline(yintercept = .5, size = .5, color = "black", linetype="dashed") +
   theme(axis.title.y = element_text(margin = margin(t = 0, r = 5, b = 0, l = 0)))
-ggsave("despot_wealth_all.png", units = "in", width = 6, height = 4)
+ggsave("despot_wealth_all.png", units = "in", width = 4, height = 4, scale = 2)

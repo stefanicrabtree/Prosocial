@@ -340,7 +340,7 @@ MM_ %>%
   ggplot() +
   geom_line(aes(step, avg_coop_pennies, color = factor(sanction_fine)),
             linewidth = 1, position=position_dodge(width=2)) +
-  labs(x= "Time step", y= "Proportion", title = "Cooperator's proportion of total wealth", color = "Sanction fine") +
+  labs(x= "Time step", y= "Proportion", title = "Cooperators' proportion of total wealth", color = "Sanction fine") +
   scale_color_manual(values = stef_colors) +
   scale_linetype_manual("CPRm", values = c("dotted","solid")) +
   theme_bw() +
@@ -361,7 +361,7 @@ MM_ %>%
             linewidth = 1, position=position_dodge(width=2)) +
   #geom_line(aes(step, avg_coop_pennies, color = factor(sanction_fine)),
   #          linewidth = 1, position=position_dodge(width=2)) +
-  labs(x= "Time step", y= "Proportion", title = "Cooperator's proportion of total wealth", color = "Sanction fine") +
+  labs(x= "Time step", y= "Proportion", title = "Cooperators' proportion of total wealth", color = "Sanction fine") +
   scale_color_manual(values = stef_colors) +
   scale_linetype_manual("CPRm", values = c("dotted","solid")) +
   theme_bw() +

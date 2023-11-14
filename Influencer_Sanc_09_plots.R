@@ -322,7 +322,7 @@ inf_sanc_09_ %>%
             linewidth = 1, position=position_dodge(width=10)) +
 #  geom_line(aes(step, avg_coop_pennies, color = factor(local_probinfluence), linetype = local_sphereinfluence),
 #            linewidth = 1) +
-  labs(x= "Step", y= "Proportion", title = "Cooperator's proportion of total wealth") +
+  labs(x= "Step", y= "Proportion", title = "Cooperators' proportion of total wealth") +
   scale_color_manual("Prob. of Influence", values = stef_colors) +
   scale_linetype_manual("Sphere of Influence", values = c("dotted","solid")) +
   theme_bw() +
