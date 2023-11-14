@@ -309,6 +309,8 @@ inf_sanc_09_ <- inf_sanc_09 %>%
   mutate(Strategy = "Influencer")
 
 inf_sanc_09_ %>%
+  filter(local_probinfluence == 0.9 | local_probinfluence == 0.5) %>%
+  filter(local_sphereinfluence != 3) %>%
   select(run_num, step, local_probinfluence, local_sphereinfluence, coopall_pennies_frac) %>%
   mutate(local_probinfluence = as.factor(local_probinfluence)) %>%
   mutate(local_sphereinfluence = as.factor(local_sphereinfluence)) %>%
@@ -320,11 +322,12 @@ inf_sanc_09_ %>%
             linewidth = 1, position=position_dodge(width=10)) +
 #  geom_line(aes(step, avg_coop_pennies, color = factor(local_probinfluence), linetype = local_sphereinfluence),
 #            linewidth = 1) +
-  labs(x= "Step", y= "Cooperator's proportion of total wealth", title = "Influencer") +
+  labs(x= "Step", y= "Proportion", title = "Cooperator's proportion of total wealth") +
   scale_color_manual("Prob. of Influence", values = stef_colors) +
-  scale_linetype_manual("Sphere of Influence", values = c("dotted","dashed","solid")) +
+  scale_linetype_manual("Sphere of Influence", values = c("dotted","solid")) +
   theme_bw() +
+  theme(legend.position = c(0.9, 0.2)) +
   #guides(colour = "none") +
   geom_hline( yintercept = .5, size = 1, color = "black", linetype="dashed")
-ggsave("infl_wealth_all_nov13.png", units = "in", height = 4, width = 6)
+ggsave("infl_wealth_all_nov13.png", units = "in", height = 4, width = 4,scale = 2)
 
