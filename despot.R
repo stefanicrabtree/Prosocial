@@ -1,8 +1,9 @@
-despot40 <- read.csv ("Prosocial_April_30_despot_ps_4-table.csv", skip=6, header=T)
-despot90 <- read.csv ("Prosocial_April_30_despot_ps_9-table.csv", skip=6, header=T)
+despot40 <- read.csv ("Prosocial_March_15_despot_ps_40-table.csv", skip=6, header=T)
+despot90 <- read.csv ("Prosocial_March_15_despot_ps_90-table.csv", skip=6, header=T)
 
 despot <- bind_rows(despot40,despot90) %>%
-  mutate(Strategy = "Global")
+  mutate(Strategy = "Global") %>% 
+  replace(is.na(.), 0)
 
 despot_ <- despot %>%
   mutate(total_pennies = monitor_pennies + always_defect_pennies + cooperator_pennies + reluctant_cooperator_pennies + reluctant_defector_pennies) %>%
@@ -19,7 +20,7 @@ despot_ %>%
   labs(x= "Time step", y= "Proportion", title = "Cooperators' proportion of total wealth", color = "Sanction\nprobability") +
   scale_color_manual(values = stef_colors) +
   scale_linetype_manual("PGGm", values = c("dotted","solid")) +
-  theme_bw() +
+  theme_few() +
   #guides(colour = "none") +
   theme(legend.position = c(0.8, 0.2)) +
   geom_hline(yintercept = .5, size = .5, color = "black", linetype="dashed") +

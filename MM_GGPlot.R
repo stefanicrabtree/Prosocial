@@ -307,10 +307,13 @@ library(dplyr)
 library(ggplot2)
 
 
-MMa <- read.csv ("Prosocial_July_7_mm_only_PGG_2_Prob_4-table.csv", skip=6, header=T) 
-MMb <- read.csv("Prosocial_July_7_mm_only_PGG_1_5_Prob_4-table.csv", skip=6, header = T)
-MM <- bind_rows(MMa,MMb) %>%
-  mutate(Strategy = "MM")
+#MMa <- read.csv ("Prosocial_July_7_mm_only_PGG_2_Prob_4-table.csv", skip=6, header=T) 
+MMa <- read.csv("Prosocial_April_9_mm_only_PGG_2_sanction_tax_0_50-table.csv", skip=6, header=T)
+#MMb <- read.csv("Prosocial_July_7_mm_only_PGG_1_5_Prob_4-table.csv", skip=6, header = T)
+#MM <- bind_rows(MMa,MMb) %>%
+MM <- MMa %>%
+  mutate(Strategy = "MM") %>% 
+  replace(is.na(.), 0)
 
 
 # MM_6_ <- MM_6 %>%
@@ -343,7 +346,7 @@ MM_ %>%
   labs(x= "Time step", y= "Proportion", title = "Cooperators' proportion of total wealth", color = "Sanction fine") +
   scale_color_manual(values = stef_colors) +
   scale_linetype_manual("CPRm", values = c("dotted","solid")) +
-  theme_bw() +
+  theme_few() +
   #guides(colour = "none", linetype = "none") +
   theme(legend.position = c(0.8, 0.2)) +
   geom_hline(yintercept = .5, size = .5, color = "black", linetype="dashed") +
