@@ -323,12 +323,44 @@ inf_sanc_09_ %>%
             linewidth = 1, position=position_dodge(width=10)) +
 #  geom_line(aes(step, avg_coop_pennies, color = factor(local_probinfluence), linetype = local_sphereinfluence),
 #            linewidth = 1) +
-  labs(x= "Step", y= "Proportion", title = "Cooperators' proportion of total wealth") +
-  scale_color_manual("Prob. of Influence", values = stef_colors) +
+  labs(x= "Step", y= "Cooperators' proportion of total wealth") +
   scale_linetype_manual("Sphere of Influence", values = c("dotted","solid")) +
+  scale_color_manual("Prob. of Influence", values = stef_colors) +
   theme_few() +
   theme(legend.position = c(0.8, 0.2)) +
   #guides(colour = "none") +
   geom_hline( yintercept = .5, size = 1, color = "black", linetype="dashed")
-ggsave("infl_wealth_all_apr_9_2024.png", units = "in", height = 4, width = 4,scale = 1.5)
+#ggsave("infl_wealth_all_apr_9_2024.png", units = "in", height = 4, width = 4,scale = 1.5)
+ggsave("Figure_3e.png", units = "in", height = 4, width = 4,scale = 1.5)
+
+inf_sanc_40 <- read.csv ("Prosocial_influencer_04_sanct-table.csv", skip=6, header=T)
+inf_sanc_40_ <- inf_sanc_40 %>% 
+  replace(is.na(.), 0) %>%
+  mutate(total_pennies = monitor_pennies + always_defect_pennies + cooperator_pennies + reluctant_cooperator_pennies + reluctant_defector_pennies + infl_pennies) %>%
+  mutate(coopall_pennies_frac = (monitor_pennies + cooperator_pennies + reluctant_cooperator_pennies + infl_pennies) / total_pennies) %>%
+  mutate(Strategy = "Influencer")
+
+inf_sanc_40_ %>%
+  #filter(local_probinfluence == 0.9 | local_probinfluence == 0.5) %>%
+  #filter(local_sphereinfluence != 3) %>%
+  select(run_num, step, local_probinfluence, local_sphereinfluence, coopall_pennies_frac) %>%
+  mutate(local_probinfluence = as.factor(local_probinfluence)) %>%
+  mutate(local_sphereinfluence = as.factor(local_sphereinfluence)) %>%
+  group_by(step, local_probinfluence, local_sphereinfluence) %>%
+  dplyr::summarise(avg_coop_pennies = mean(coopall_pennies_frac)) %>%
+  ggplot() +
+  #geom_line(aes(step, coopall_pennies_frac, color = factor(run_num)))
+  geom_line(aes(step, avg_coop_pennies, color = factor(local_probinfluence), linetype = local_sphereinfluence),
+            linewidth = 1, position=position_dodge(width=10)) +
+  #  geom_line(aes(step, avg_coop_pennies, color = factor(local_probinfluence), linetype = local_sphereinfluence),
+  #            linewidth = 1) +
+  labs(x= "Step", y= "Cooperators' proportion of total wealth") +
+  scale_linetype_manual("Sphere of Influence", values = c("dotted","dashed","solid")) +
+  scale_color_manual("Prob. of Influence", values = stef_colors) +
+  theme_few() +
+  theme(legend.position = c(0.8, 0.3)) +
+  #guides(colour = "none") +
+  geom_hline( yintercept = .5, size = 1, color = "black", linetype="dashed")
+#ggsave("infl_wealth_all_apr_9_2024.png", units = "in", height = 4, width = 4,scale = 1.5)
+ggsave("S_19_infl_wealth_all_sanc40.png", units = "in", height = 4, width = 4,scale = 1.5)
 
