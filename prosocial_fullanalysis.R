@@ -1,3 +1,15 @@
+#### This is combined code from our analyses. 
+##The summarySE function pulls together the data and finds the standard errors as well as median
+##Of  note; when we ran this code we noticed that occasionally the temporary variables, 
+##such as a2 below, would not be cleared and instead if you used this variable name a second time
+## you would have data added to it, making the means correspond to two data sets.
+## this is why these are hard coded as ridiculous names (a2, a3, aaa, aaaa, for example)
+##While we (Stefani mostly) recognizes that this is less than elegant, trying to concatinate through
+##caused problems. Thus, this is the code that we used, but put together in one file. 
+##You can look in the R archive on GitHub to see each of the individual files
+
+
+
 ## Summary Function for SE ####
 
 summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE,
