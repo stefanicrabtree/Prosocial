@@ -12,7 +12,7 @@ globals [
 turtles-own [
 
   pennies          ; resources that turtles have to contribute to public good game
-  head
+  head             ; head of each household
   sanctioned
   cooperate
   my_lineage
@@ -116,13 +116,13 @@ to play-goods-game
   ask turtles with [label = "C" or label = "infl"] [
     set pennies pennies - cost-of-pg-game
     set cooperate true
-    ask turtle head [set pennies pennies + cost-of-pg-game] ;so every turtle gives their fee to their head
+    ask turtle head [set pennies pennies + cost-of-pg-game] ;so every turtle gives their fee to their head so there is a central collection
   ]
 
   ask turtles with [label = "R" ] [
     if sanctioned = true [
       set pennies pennies - cost-of-pg-game
-      ;; we need the sanction to make them play the game correctly, otherwise they free ride
+      ;; we need the sanction to make them play the game correctly, otherwise they free ride and the game falls apart quickly, from Hooper et al.
       ask turtle head [set pennies pennies + cost-of-pg-game] ]
   ]
 
@@ -137,14 +137,14 @@ end
 
 to divide_goods
 
-  ;heads divide the pennies that have been collected from the p.g. game evenly
+  ;heads divide the pennies that have been collected from the common pool resource game evenly
   ask turtles with [head = who] [
     set pennies pennies * public_goods_game_multiplier
     let my_turtles turtles with [breed = [breed] of myself]
     let share (pennies / count my_turtles)
     let head_decrease (share * count my_turtles)
 
-    ask my_turtles [ ;this includes HoH
+    ask my_turtles [ ;this includes head
       set pennies pennies + share
     ]
 
@@ -179,7 +179,7 @@ to sanction-new
 
               if pennies < 10 [
                 set my_fine (sanction_fine * 0.25 )
-                ;set my_fine (pennies * (sanction_fine_percent * .25)
+
                 set pennies pennies - my_fine
               ]
 
@@ -736,30 +736,56 @@ sanction_type
 @#$#@#$#@
 ## WHAT IS IT?
 
-The purpose of the model is to explore the effects of different leadership models on the success of cooperative individuals within a general population of cooperators and defectors. The agents participate in a common-pool resource game (CPRG) by spending units of their wealth, called ``pennies'', but may be sanctioned in different ways if they try to collect from the public pool without first contributing. We monitor the wealth and population size of cooperators vs. defectors as the CPRG continues over time to see which leadership strategy results in the highest levels of prosocial behavior.
+The purpose of the model is to explore the effects of different leadership models on the success of cooperative individuals within a general population of cooperators and defectors. The agents participate in a common-pool resource game (CPRG) by spending units of their wealth, called "pennies", but may be sanctioned in different ways if they try to collect from the public pool without first contributing. We monitor the wealth and population size of cooperators vs. defectors as the CPRG continues over time to see which leadership strategy results in the highest levels of prosocial behavior.
 
 ## HOW IT WORKS
 
+This model is inspired by and extends a published common- pool resource game model by Hooper et al. [2010]. In the model, agents participate in a common pool economy whereby agents put in units of wealth, pennies, which is then multiplied by some amount to represent the benefit of cooperation, before the pool is redistributed to all agents. However, in a game theoretical dynamic, some agents “defect” and do not pay into the pool while still reaping the benefit from it. Hooper et al. experimented with social monitors to enforce penalties against those defectors, but with a small monitoring cost to themselves as well. We expand upon this governance strategy of “mutual monitoring” with three additional governance models, a top- down leadership we call “despot,” a copying model called “copy wealthy defector”, and a bottom-up localized “influencer” model.
+
+Basic principles
+
 Governance models do not change the way sanctions are imposed, following Hooper et al. those are imposed by the monitors. Instead the governance model influences how the reluctant individuals in the population choose to begin defecting from the CPRG again after being caught defecting by a monitor and forced to cooperate.
 
-
-In Mutual Monitoring, a randomized 10% of reluctants revert to defection. 
-In Despot, a leader "sets the tone" and agents who have defected and been punished do not choose to defect again; they become cooperators.
-In Copy Wealthy Defectors, a random 10% of reluctants continue to defect despite having been sanctioned (i.e. "copy-the-successful").
-In Influencer, when the mean wealth of cooperative agents is higher a reluctant will decide to become a local "influencer" for cooperation and will convert some of the other reluctants within the local sphere of influence to cooperate.  
-
+• In Mutual Monitoring, a randomized 10% of reluctants revert to defection.
+• In Despot, a leaders “sets the tone” and agents who have defected and been punished do not choose to defect again; they become cooperators.
+• In Influencer, when the mean wealth of cooperative agents is higher a reluctant will decide to become a local “influencer” for cooperation and will convert some of the other reluctants within the local sphere of influence to cooperate.
 
 The common-pool resource game relies on enough cooperating agents to put money into the pool. Free-riding defectors reduce the value of the common pool such that even the multiplier benefit cannot keep up and the system will crash in a tragedy of the commons. While monitors can reduce the payoff for defectors, they also pay a cost themselves, if there are too many defectors relative to monitors, monitors cannot survive and defectors will drive the system down again. Thus, the rate and manner in which relucants are able to revert to defection has a large impact on the stability of the CPRG economy.  
 
+Hooper et al. [2010] found that mutual monitoring did not scale well with large populations, and suggested that top- down leadership is needed to enforce cooperation. In this model we examine if that is true and further expand on other governance strategies that could insure cooperation in a multi-round common-pool resource game.
+
 ## HOW TO USE IT
 
-The "global strategy" chooser allows you to choose different governance strategies. This is the most important to look at how different strategies can lead to different outcomes.
+Model parameters are set by the user prior to setup. The parameters relevant to initialization include:
+• world-size: size in X and Y directions for the world dimensions (default 25 x 25)
+• pop size: the total number of agents to be created (default 100)
+• percent monitors, percent always defect, percent cooperators: percentage of the agents to be assigned to each strategy with reluctants making up the remainder (default: 7%, 7%, 45% respectively, leaving 41% for reluctants)
 
-Sanction fines are adjusted based on the amount of wealth each agent has. However, play with how the fines impact agent population. Similarly, see how the "public-goods game multiplier" (common pool resource multiplier) can change the outcome. 
+The additional parameters below are set by the user before setup, but except in experimental sweeps, are held constant between runs of the di↵erent governance models to aid in comparison.
 
-You can vary the number of agents, and see how that impacts things.
+• global strategy: the governance model for the run (one of “mm”, “depost”, or “influencer”)
+• sanction tax: pennies taken from monitors, and removed from the game, as their cost of sanctioning (default 5)
+• public goods game multiplier: per time step increase in the value of common pool before redistribution (defaults 1.5 or 2)
+• cost-of-pg-game: amount of wealth each cooperating agent must put into the CPRG each turn (default 1)
+• prob-sanction: probability that each monitor will choose to search for and sanction another agent (default 0.6)
+• sanction time: number of time steps before sanctioning begins (default 50)
+• sanction type: type of fining scheme imposed by monitors on the defectors the catch (one of “sanction fine percent” or “sanction fine”)
+• sanction fine percent: if sanction type set to percent, this value is the percentage of the sanctioned’s wealth taken for defecting (variable ranging from 0.1 to 1 (i.e. 10% to 100%))
+• sanction fine: if sanction type set to fine, this is the base value of pennies taken from defectors, and added to the pool, when caught (default 6.5)
+• local sphereinfluence: in Influencer, radius in cells used for “influencer” agents to search for reluctants to convert (range 1-10, default 5)
+• localprobinfluence: in Influencer, probability of an “influencer” will successfully convert any given reluctant within their sphere of influence.
 
-num-lineages is not active in this model.
+reset-sanctions
+Reset-sanctions is the only part of the code where the different governance models are employed. Under a global strategy of mutual monitoring (mm only), the reset-sanctions submodel will select a random 10% of sanctioned Reluctant agents and will revert them to non-cooperation (i.e. cooperate = false) and clear their sanction status (sanctioned = false).
+
+For a global strategy of despot, defecting agents who have been sanctioned do not reset their sanctions, but become cooperators until the end of the simulation. This only e↵ects reluctant cooperators and not pure defectors.
+
+Agents are created with a randomized non-occupied location on the landscape and are assigned a “label” according to the specified percentages of each agent type as well as a color to aid in relative visualization of population sizes. Initialization is otherwise identical for each run and for all governance models.
+
+For a global strategy of copy wealthy defector, reset- sanctions instead asks a random 10% of sanctioned Reluctant agents to compare themselves to the richest of a randomly selected 10 other agents. If that comparison agent is richer and a defector, they copy their defection status (i.e. copy-the- successful) and either way they also clear their sanctions.
+
+Finally, under a global strategy of influencer, reset- sanctions first compares the mean wealth of currently cooperating agents versus non-cooperating agents. If the mean cooperating wealth is greater, a random non- cooperating reluctant agent is converted to be a local cooperating “influencer” (label = “Infl” and cooperate = true). That agent will then convert a percentage (% determined by a local probinfluence parameter) of their nearby agents, with distance determined by another parameter, local sphereinfluence. This is the only part of the ABM that is explicitly spatial, as conversion occurs only within a specified spatial radius and, in subsequent time steps, additional influencers can only be converted from outside of that spatial radius.
+
 
 ## THINGS TO NOTICE
 
@@ -767,16 +793,28 @@ Fines, common-pool resource multipliers, and costs for monitoring all have inter
 
 ## THINGS TO TRY
 
+The "global strategy" chooser allows you to choose different governance strategies. This is the most important to look at how different strategies can lead to different outcomes.
+
+Sanction fines are adjusted based on the amount of wealth each agent has. However, play with how the fines impact agent population. Similarly, see how the "public-goods game multiplier" (common pool resource multiplier) can change the outcome. 
+
+You can vary the number of agents, and see how that impacts things.
+
+num-lineages is not active in this model, but could be used in future to look at how different lineages with different proportions of cooperators or defectors could out perform other lineages.
+
 Try seeing if you can get cooperators to be the most dominant strategy in a mutual monitoring scenario.
 
 ## EXTENDING THE MODEL
 
-What would happen if there was sexual reproduction in this model?
+What would happen if there was sexual reproduction in this model? What if you worked on building in competing lineages and saw which lineages performed the best over time?
 
 
 ## CREDITS AND REFERENCES
 
-Paul Hooper et al.'s "A Theory of Leadership in Cooperative Groups" from 2010's Journal of Theoretical Biology directly influenced this work.
+Avinash Dixit and Simon Levin. Social Creation of Pro-social Preferences for Collective Action. In Wolfgang Buchholz and Dirk Ru ̈bbelke, editors, The Theory of Externalities and Public Goods, pages 127–143. Springer International Publishing, Cham, 2017. ISBN 978-3-319-49441-8 978-3- 319-49442-5. doi: 10.1007/978-3-319-49442-5 7. URL http: //link.springer.com/10.1007/978- 3- 319- 49442- 5_7.
+
+Paul L. Hooper, Hillard S. Kaplan, and Adrian V. Jaeggi. Gains to cooperation drive the evolution of egalitarianism. Nature Human Behaviour, 5(7):847–856, July 2021. ISSN 2397-3374. doi: 10.1038/s41562-021-01059-y. URL https: //doi.org/10.1038/s41562- 021- 01059- y.
+
+Timothy A. Kohler, Denton Cockburn, Paul L. Hooper, R. Kyle Bocinsky, and ZIAD Kobti. THE COEVOLUTION OF GROUP SIZE AND LEADERSHIP: AN AGENT-BASED ISSN 0140-525X. doi: 10.1017/S0140525X1400106X. PUBLIC GOODS MODEL FOR PREHISPANIC PUEBLO SOCIETIES. Advances in Complex Systems, 15(01n02): 1150007, March 2012. ISSN 0219-5259. doi: 10. 1142/S0219525911003256. URL https://doi.org/10.1142/ S0219525911003256. Publisher: World Scientific Publishing Co.
 @#$#@#$#@
 default
 true
